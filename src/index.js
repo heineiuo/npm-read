@@ -181,12 +181,11 @@ export async function readFile (address, options) {
   } = parseAddress(address)
 
   if (semver.valid(version)) {
-    // 是确定版本，尝试读取本地文件
-    if (__DEV__) console.log('是确定版本，尝试读取本地文件')
+    if (__DEV__) console.log('is exactly version, try to load local cache')
     try {
       let dlDir = await getDownloadDir(name, version)
       const fullFilePath = path.join(dlDir, filePath)
-      if (!(fullFilePath.indexOf(dlDir) === 0)) throw errors.Forbidden()
+      if (!(fullFilePath.indexOf(dlDir) === 0)) throw new errors.Forbidden()
       await fs.promises.stat(fullFilePath)
       const result = await fs.promises.readFile(fullFilePath, options)
       return result
@@ -203,7 +202,7 @@ export async function readFile (address, options) {
 
   await downloadAndExtract(dlDir, data.dist.tarball)
   const fullFilePath = path.join(dlDir, filePath)
-  if (!(fullFilePath.indexOf(dlDir) === 0)) throw errors.Forbidden()
+  if (!(fullFilePath.indexOf(dlDir) === 0)) throw new errors.Forbidden()
   const result = await fs.promises.readFile(fullFilePath, options)
   return result
 }
