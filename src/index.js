@@ -170,7 +170,7 @@ async function fetchPkgData (name, pkgUrl, version) {
   }
 }
 
-export async function readFile (address, options) {
+export async function downloadFile (address) {
   if (!address) throw new errors.BadRequest()
 
   let {
@@ -187,8 +187,7 @@ export async function readFile (address, options) {
       const fullFilePath = path.join(dlDir, filePath)
       if (!(fullFilePath.indexOf(dlDir) === 0)) throw new errors.Forbidden()
       await fs.promises.stat(fullFilePath)
-      const result = await fs.promises.readFile(fullFilePath, options)
-      return result
+      return fullFilePath
     } catch (e) {
     }
   }
@@ -203,6 +202,11 @@ export async function readFile (address, options) {
   await downloadAndExtract(dlDir, data.dist.tarball)
   const fullFilePath = path.join(dlDir, filePath)
   if (!(fullFilePath.indexOf(dlDir) === 0)) throw new errors.Forbidden()
+  return fullFilePath
+}
+
+export async function readFile (address, options) {
+  const fullFilePath = await downloadFile(address)
   const result = await fs.promises.readFile(fullFilePath, options)
   return result
 }
