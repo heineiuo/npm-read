@@ -6,14 +6,14 @@
 #### readFile
 
 ```js
-import { readFile } from 'npm-pull'
+import { readFile } from 'npm-read'
 ```
 
 
 #### downloadFile
 
 ```js
-import { downloadFile } from 'npm-pull'
+import { downloadFile } from 'npm-read'
 ```
 
 ## License 
