@@ -13,10 +13,11 @@
     "index.d.ts"
   ],
   "dependencies": {
+    "gunzip-maybe": "^1.4.1",
     "http-errors": "^1.7.1",
     "node-fetch": "^2.1.2",
     "semver": "^5.6.0",
-    "tar": "^4.4.6"
+    "tar-stream": "^1.6.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
