@@ -1,5 +1,5 @@
 {
-  "name": "npm-readfile",
+  "name": "npm-read",
   "version": "0.0.3",
   "main": "dist/index.js",
   "license": "MIT",
