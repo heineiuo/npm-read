@@ -107,7 +107,7 @@ function parseAddress (address) {
   return { name, version, pkgUrl, filePath }
 }
 
-async function getPkgData (name, pkgUrl, expire = 30000) {
+async function fetchPkgIndexData (name, pkgUrl, expire = 30000) {
   const pkgFilePath = await getPkgFilePath(name)
   let data = null
   let shouldUpdate = true
@@ -137,8 +137,12 @@ async function getPkgData (name, pkgUrl, expire = 30000) {
 }
 
 async function fetchPkgData (name, pkgUrl, version) {
-  let data = await getPkgData(name, pkgUrl)
+  let data = await fetchPkgIndexData(name, pkgUrl)
   if (!data) throw new errors.NotFound()
+  if (data.error) {
+    if (data.error === 'Not Found') throw new errors.NotFound()
+    throw new errors.BadRequest(data.error)
+  }
 
   let isDistTag = false
 
